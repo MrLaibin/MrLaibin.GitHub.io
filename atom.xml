@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://mrlaibin.github.io/</id>
     <title>Gridea</title>
-    <updated>2019-11-12T01:32:46.730Z</updated>
+    <updated>2019-11-12T01:40:25.059Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://mrlaibin.github.io/"/>
     <link rel="self" href="https://mrlaibin.github.io//atom.xml"/>
@@ -10,6 +10,118 @@
     <logo>https://mrlaibin.github.io//images/avatar.png</logo>
     <icon>https://mrlaibin.github.io//favicon.ico</icon>
     <rights>All rights reserved 2019, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[react-native android 阴影边框兼容]]></title>
+        <id>https://mrlaibin.github.io//post/react-native-android-yin-ying-bian-kuang-jian-rong</id>
+        <link href="https://mrlaibin.github.io//post/react-native-android-yin-ying-bian-kuang-jian-rong">
+        </link>
+        <updated>2019-11-12T01:39:54.000Z</updated>
+        <content type="html"><![CDATA[<p>根据需求部分模块需要加上边框阴影</p>
+<pre><code>container :  { 
+shadowColor: '#000',
+shadowOffset:  {  width:  0, height:  2  },
+shadowRadius: 2, 
+shadowOpacity: 0.2, 
+elevation: 2
+ }
+</code></pre>
+<p><code>[iOS]shadowColor阴影色、shadowOffset 阴影偏移量object: {width: number,height: number}、shadowOpacity阴影不透明度 (乘以颜色的alpha分量)、shadowRadius阴影模糊半径</code><br>
+<code>[Android]elevation使用Android原生的 elevation API来设置视图的高度。这样可以为视图添加一个投影，并且会影响视图层叠的顺序。此属性仅支持Android5.0及以上版本。</code></p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[大量systemd-journal占用磁盘空间]]></title>
+        <id>https://mrlaibin.github.io//post/da-liang-systemd-journal-zhan-yong-ci-pan-kong-jian</id>
+        <link href="https://mrlaibin.github.io//post/da-liang-systemd-journal-zhan-yong-ci-pan-kong-jian">
+        </link>
+        <updated>2019-11-12T01:39:46.000Z</updated>
+        <content type="html"><![CDATA[<p>首先通过journalctl查看日志过多的原因。<br>
+如果不重要可以通过 <code>journalctl --vacuum-size=500M</code>可以限制log的大小，</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[利用docker 搭建maven仓库]]></title>
+        <id>https://mrlaibin.github.io//post/li-yong-docker-da-jian-maven-cang-ku</id>
+        <link href="https://mrlaibin.github.io//post/li-yong-docker-da-jian-maven-cang-ku">
+        </link>
+        <updated>2019-11-12T01:39:10.000Z</updated>
+        <content type="html"><![CDATA[<p>项目进行组件化，为减少项目之间的依赖关系，减少打包时间，优化as 依赖索引。建立内部maven私有仓库。<br>
+docker 好处是封装细节，让我们不再关心maven仓库的搭建细节，更快速的达到目的。</p>
+<h3 id="安装nexus">安装Nexus</h3>
+<pre><code>$ docker run -d -p 8081:8081 sonatype/nexus3
+#可以挂载本地目录做数据持久化
+$ mkdir /some/dir/nexus-data &amp;&amp; chown -R 757 /some/dir/nexus-data
+$ docker run -d -p 8081:8081 -v /some/dir/nexus-data:/nexus-data sonatype/nexus3
+</code></pre>
+<h3 id="登陆nexus">登陆Nexus</h3>
+<p>完成后即可打开xxx:8081页面进行登录，默认密码 <strong>admin：admin123</strong></p>
+<table>
+<thead>
+<tr>
+<th>仓库名</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hosted（宿主仓库库）</td>
+<td>存放本公司开发的jar包（正式版本、测试版本）</td>
+</tr>
+<tr>
+<td>proxy（代理仓库）</td>
+<td>代理中央仓库、Apache下测试版本的jar包</td>
+</tr>
+<tr>
+<td>group（组仓库）</td>
+<td>使用时连接组仓库，包含Hosted（宿主仓库）和Proxy（代理仓库）</td>
+</tr>
+<tr>
+<td>virtual (虚拟仓库)</td>
+<td>基本用不到，重点关注上面三个仓库的使用</td>
+</tr>
+</tbody>
+</table>
+<h4 id="创建仓库">创建仓库</h4>
+<figure data-type="image" tabindex="1"><img src="https://img-blog.csdn.net/20180906121711802?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RlTW9ubGl1aHVp/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="在这里创建仓库"></figure>
+<p><strong>选择Maven2(hosted)</strong></p>
+<figure data-type="image" tabindex="2"><img src="https://img-blog.csdn.net/20180906121723396?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L0RlTW9ubGl1aHVp/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70" alt="这里填写详情"></figure>
+<p>创建仓库成功后，看到仓库可以点击Copy复制仓库路径。<br>
+<code>maven{ url &quot;http://laibin.ml:8081/repository/maven-releases/&quot; }</code></p>
+<p>然后在</p>
+<pre><code>
+apply plugin: 'maven'
+
+uploadArchives{
+    repositories{
+        mavenDeployer{
+            repository(url: LOCAL_REPO_URL) {
+                authentication(userName: &quot;admin&quot;, password: &quot;admin123&quot;)
+            }
+
+            pom.groupId = GROUP_ID
+            pom.artifactId = ARTIFACTID
+            pom.version = LIBRARY_VERSION
+
+            pom.project {
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
+<p>这样就把程序发布到自己的maven仓库了。</p>
+<h1 id="如何引用项目">如何引用项目</h1>
+<p>由于之前已经在项目的根部添加maven 仓库，现在只需要在模块中引用即可。</p>
+<pre><code>implementation 'com.jft:base:1.0.0'
+</code></pre>
+<p>com.jft是上传时所~~~~填写的groupId，base是上传时所填写的artifactId。这样项目就可以使用自己的依赖了。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
         <id>https://mrlaibin.github.io//post/hello-gridea</id>
