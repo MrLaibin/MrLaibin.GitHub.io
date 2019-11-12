@@ -1,93 +1,102 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>OpenGL 入门(一)初始化view | Gridea</title>
-<meta name="description" content="温故而知新" />
-<link rel="shortcut icon" href="https://mrlaibin.github.io//favicon.ico?v=1573522990044">
+<meta name="description" content="温故而知新">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://mrlaibin.github.io//favicon.ico?v=1573523419068">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://mrlaibin.github.io//styles/main.css">
 
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 
 
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://mrlaibin.github.io/">
-  <img class="avatar" src="https://mrlaibin.github.io//images/avatar.png?v=1573522990044" alt="">
-  </a>
-  <h1 class="site-title">
-    Gridea
-  </h1>
-  <p class="site-description">
-    温故而知新
-  </p>
-  <div class="menu-container">
-    
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://mrlaibin.github.io/">
+        <img src="https://mrlaibin.github.io//images/avatar.png?v=1573523419068" class="site-logo">
+        <h1 class="site-title">Gridea</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
       
-        <a href="/" class="menu">
-          首页
-        </a>
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
       
-    
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
       
-        <a href="/archives" class="menu">
-          归档
-        </a>
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
       
-    
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
       
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+    </div>
   </div>
-  <div class="social-container">
-    
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
       
-    
+        
       
-    
+        
       
-    
+        
       
-    
+        
       
-    
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://mrlaibin.github.io//atom.xml" target="_blank">RSS</a>
+    </div>
   </div>
 </div>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              OpenGL 入门(一)初始化view
-            </h2>
-            <div class="post-info">
-              <span>
-                2019-11-12
-              </span>
-              <span>
-                3 min read
-              </span>
-              
-            </div>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">OpenGL 入门(一)初始化view</h2>
+            <div class="post-date">2019-11-12</div>
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <h1 id="init">init()</h1>
+            <div class="post-content">
+              <h1 id="init">init()</h1>
 <pre><code>void Init(){
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -132,91 +141,46 @@ GLdouble zFar //沿z轴方向的两裁面之间的距离的远处
 <h1 id="简单地说glflush">简单地说glFlush</h1>
 <p>简单地说glFlush()就是强制刷新，OpenGL是使用一条<code>渲染管线</code>线性处理命令的，一般情况下，我们提交给OpenGL的指令并不是马上送到<code>驱动程序</code>里执行的，而是放到一个缓冲区里面，等这个缓冲区满了再一次过发到驱动程序里执行；很多时候只有几条指令是填充不满那个缓冲区的，就是说这些指令根本没有被发送到驱动里，所以我们要调用glFlush来强制把这些指令送到驱动里进行处理。</p>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#init">init()</a>
-<ul>
-<li><a href="#glmatrixmode">glMatrixMode</a></li>
-<li><a href="#glloadidentity">glLoadIdentity</a></li>
-<li><a href="#gluperspective">gluPerspective</a></li>
-</ul>
-</li>
-<li><a href="#draw">draw()</a><br>
-*
-<ul>
-<li><a href="#glclearcolor">glClearColor</a></li>
-<li><a href="#glclear">glClear</a></li>
-</ul>
-</li>
-<li><a href="#%E7%AE%80%E5%8D%95%E5%9C%B0%E8%AF%B4glflush">简单地说glFlush</a></li>
-</ul>
-
-              </div>
             </div>
-          </article>
-        </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://mrlaibin.github.io//post/android-zu-jian-hua-shi-jian">
+                  <h3 class="post-title">
+                    Android 组件化实践
+                  </h3>
+                </a>
+              </div>
+            
 
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://mrlaibin.github.io//post/android-zu-jian-hua-shi-jian">
-              <h3 class="post-title">
-                Android 组件化实践
-              </h3>
-            </a>
+            
+
           </div>
-        
 
-        
+        </div>
+      </div>
+    </div>
 
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 
-  <a class="rss" href="https://mrlaibin.github.io//atom.xml" target="_blank">RSS</a>
-</div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-<script>
-  hljs.initHighlightingOnLoad()
+<script type="application/javascript">
 
-  let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-  // This should probably be throttled.
-  // Especially because it triggers during smooth scrolling.
-  // https://lodash.com/docs/4.17.10#throttle
-  // You could do like...
-  // window.addEventListener("scroll", () => {
-  //    _.throttle(doThatStuff, 100);
-  // });
-  // Only not doing it here to keep this Pen dependency-free.
+hljs.initHighlightingOnLoad()
 
-  window.addEventListener("scroll", event => {
-    let fromTop = window.scrollY;
-
-    mainNavLinks.forEach((link, index) => {
-      let section = document.getElementById(decodeURI(link.hash).substring(1));
-      let nextSection = null
-      if (mainNavLinks[index + 1]) {
-        nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-      }
-      if (section.offsetTop <= fromTop) {
-        if (nextSection) {
-          if (nextSection.offsetTop > fromTop) {
-            link.classList.add("current");
-          } else {
-            link.classList.remove("current");    
-          }
-        } else {
-          link.classList.add("current");
-        }
-      } else {
-        link.classList.remove("current");
-      }
-    });
-  });
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
 </script>
 
-      </div>
-    </div>
+
+
+
   </body>
 </html>
