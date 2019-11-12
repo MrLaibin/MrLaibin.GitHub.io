@@ -1,8 +1,8 @@
 <html>
   <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gridea | Gridea</title>
+<title>BigDecimal 常用方法 | Gridea</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://mrlaibin.github.io//favicon.ico?v=1573522990044">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -70,47 +70,61 @@
   </div>
 </div>
 
-        <div class="current-tag-container">
-            <h2 class="title">
-                标签：# Gridea
-            </h2> 
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              BigDecimal 常用方法
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-11-12
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>初始化方法</p>
+<pre><code>BigDecimal b1 = new BigDecimal(Double.toString(0.96)); 
+BigDecimal b2 = BigDecimal.valueOf(0.86);
+</code></pre>
+<p>常用方发</p>
+<pre><code>public BigDecimal add(BigDecimal value);                        //加法
+public BigDecimal subtract(BigDecimal value);                   //减法 
+public BigDecimal multiply(BigDecimal value);                   //乘法
+public BigDecimal divide(BigDecimal value);                     //除法
+</code></pre>
+<p>相加后进行转换</p>
+<pre><code>BigDecimal b1 = new BigDecimal(Double.valueOf(value1));
+BigDecimal b2 = new BigDecimal(Double.valueOf(value2)); 
+return b1.add(b2).doubleValue();
+</code></pre>
+<p>在运算时设定精度<br>
+<code>b1.divide(b2, scale).doubleValue();</code></p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
         </div>
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://mrlaibin.github.io//post/hello-gridea">
-        <h2 class="post-title">Hello Gridea</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2018-12-12
-        </span>
-        <span>
-          2 min read
-        </span>
-        
-          <a href="https://mrlaibin.github.io//tag/3xOxCH47N" class="post-tag">
-            # Gridea
-          </a>
-        
-      </div>
-      
-        <a href="https://mrlaibin.github.io//post/hello-gridea" class="post-feature-image" style="background-image: url('https://mrlaibin.github.io//post-images/hello-gridea.png')">
-        </a>
-      
-      <div class="post-abstract">
-        <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
 
-      </div>
-    </article>
-  
-</div>
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://mrlaibin.github.io//post/firewall-cmd-ri-chang-ji-neng">
+              <h3 class="post-title">
+                firewall-cmd日常技能
+              </h3>
+            </a>
+          </div>
+        
 
-        <div class="pagination-container">
-  
-  
-</div>
+        
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 

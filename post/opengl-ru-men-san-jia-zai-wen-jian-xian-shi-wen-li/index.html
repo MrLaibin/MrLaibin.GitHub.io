@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>关于 | Gridea</title>
+<title>OpenGL入门(三)加载文件/显示纹理 | Gridea</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://mrlaibin.github.io//favicon.ico?v=1573522990044">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -73,37 +73,99 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              关于
+              OpenGL入门(三)加载文件/显示纹理
             </h2>
             <div class="post-info">
               <span>
-                2019-01-25
+                2019-11-12
               </span>
               <span>
-                1 min read
+                2 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <blockquote>
-<p>欢迎来到我的小站呀，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<h2 id="博主是谁">👨‍💻 博主是谁</h2>
-<h2 id="兴趣爱好">⛹ 兴趣爱好</h2>
-<h2 id="联系我呀">📬 联系我呀</h2>
+                <h2 id="图片解码">图片解码</h2>
+<pre><code>unsigned char * DecodeBMP(unsigned char *filecontent,int &amp;width,int &amp;height){
+    if(0x4D42==*((unsigned short*)filecontent)){
+        int pixelDataOffset=*((int*)(filecontent+10));
+        width=*((int*)(filecontent+18));
+        height=*((int*)(filecontent+22));
+        unsigned char *pixelData=filecontent+pixelDataOffset;
+        for (int i=0; i&lt;width*height*3; i+=3) {
+            unsigned char temp=pixelData[i];
+            pixelData[i]=pixelData[i+2];
+            pixelData[i+2]=temp;
+        }
+        return pixelData;
+    }
+    return nullptr;
+}
+</code></pre>
+<h2 id="解码生成纹理">解码生成纹理</h2>
+<pre><code>GLuint CreateTexture2D(unsigned char *pixelData,int width,int height,GLenum type){
+    GLuint texture;
+    glGenTextures(1, &amp;texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexImage2D(GL_TEXTURE_2D, 0, type, width, height, 0, type, GL_UNSIGNED_BYTE, pixelData);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    return texture;
+}
+</code></pre>
+<pre><code>void Init(){
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glMatrixMode(GL_PROJECTION);
+    gluPerspective(60.0f, 800.0f/600.0f, 0.1f, 1000.0f);
+    //    skybox.Init(&quot;Res/&quot;);
+    texture = CreateTextureFromBMP(&quot;Res/test.bmp&quot;);
+}
+
+void Draw(){
+    glClearColor(0.1f, 0.4f, 0.6f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
+    glColor4ub(255, 255, 255, 255);
+    
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    glBegin(GL_POLYGON);
+    glTexCoord2f(0.0f, 0.0f);
+    
+    //    glBegin(GL_QUADS);
+    glVertex3f(-0.2f,-0.2f,-0.4f);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3f(0.2f, -0.2f, -0.4f);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3f(0.2f, 0.0f, -0.4f);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex3f(-0.2f, 0.0f, -0.4f);
+    
+    //    glColor4ub(255, 0, 0, 255);
+    //    glVertex3f(-0.1f,-0.1f,-0.3f);
+    //    glVertex3f(0.1f, -0.1f, -0.3f);
+    //    glVertex3f(0.1f, 0.0f, -0.3f);
+    //    glVertex3f(-0.1f, 0.0f, -0.3f);
+    glEnd();
+    //    skybox.Draw();
+}
+</code></pre>
 
               </div>
               <div class="toc-container">
                 <ul class="markdownIt-TOC">
 <li>
 <ul>
-<li><a href="#%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99">🏠 关于本站</a></li>
-<li><a href="#%E5%8D%9A%E4%B8%BB%E6%98%AF%E8%B0%81">👨‍💻 博主是谁</a></li>
-<li><a href="#%E5%85%B4%E8%B6%A3%E7%88%B1%E5%A5%BD">⛹ 兴趣爱好</a></li>
-<li><a href="#%E8%81%94%E7%B3%BB%E6%88%91%E5%91%80">📬 联系我呀</a></li>
+<li><a href="#%E5%9B%BE%E7%89%87%E8%A7%A3%E7%A0%81">图片解码</a></li>
+<li><a href="#%E8%A7%A3%E7%A0%81%E7%94%9F%E6%88%90%E7%BA%B9%E7%90%86">解码生成纹理</a></li>
 </ul>
 </li>
 </ul>
@@ -113,6 +175,15 @@
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://mrlaibin.github.io//post/opengl-er-jian-dan-cao-zuo">
+              <h3 class="post-title">
+                OpenGL (二)简单操作
+              </h3>
+            </a>
+          </div>
         
 
         

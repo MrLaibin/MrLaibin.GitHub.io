@@ -1,8 +1,8 @@
 <html>
   <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gridea | Gridea</title>
+<title>ios 利用xcodebuild 构建workspace 与 project | Gridea</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://mrlaibin.github.io//favicon.ico?v=1573522990044">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -70,47 +70,60 @@
   </div>
 </div>
 
-        <div class="current-tag-container">
-            <h2 class="title">
-                标签：# Gridea
-            </h2> 
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              ios 利用xcodebuild 构建workspace 与 project
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-11-12
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>We have spent quite some time tuning our automated build scripts.</p>
+<p>You can build a specific scheme that is part of a Xcode<strong>workspace</strong>(<em>.xcworkspace</em>) by using the command:</p>
+<p><code>xcodebuild -workspace *yourWorkspaceFile* -scheme *schemeName* -sdk &quot;*targetSDK*&quot; -configuration *buildConfig* CODE_SIGN_IDENTITY=&quot;*NameOfCertificateIdentity*&quot; PROVISIONING_PROFILE=&quot;*ProvisioningProfileName&quot; OTHER_CODE_SIGN_FLAGS=&quot;--keychain *keyChainName*&quot;</code><br>
+打包到指定目录<br>
+<code>xcodebuild -workspace AssociationAssistant.xcworkspace -scheme 美丽村镇 -sdk &quot;iphonesimulator&quot; -configuration Release -derivedDataPath .</code><br>
+To build a Xcode project (<em>.xcodeproj</em>), use this:</p>
+<p><code>xcodebuild -project &quot;*path/fileName*.xcodeproj&quot; -target &quot;*targetName*&quot; -sdk &quot;*targetSDK*&quot; -configuration *buildConfig* CODE_SIGN_IDENTITY=&quot;*NameOfCertificateIdentity*&quot; PROVISIONING_PROFILE=&quot;*ProvisioningProfileName&quot; OTHER_CODE_SIGN_FLAGS=&quot;--keychain *keyChainName*&quot;</code></p>
+<p>Where:<br>
+<em>yourWorkspaceFile</em>: path and filename of workspace file, e.g.<strong>path/CoolGame.xcworkspace</strong>* (points to ./path/CoolGame.xcworkspace)*<br>
+<em>schemeName</em>: name of scheme defined in project, e.g.<strong>CoolGame</strong><br>
+<em>targetName</em>: name of build target in project<br>
+<em>targetSDK</em>: e.g.<strong>iphoneos</strong><br>
+<em>buildConfig</em>:<strong>Debug</strong>,<strong>Release</strong>or<strong>Distribution</strong><br>
+<em>NameOfCertificateIdentity</em>: e.g.<strong>iPhone Developer: My Name (738d039880d)</strong><br>
+<em>ProvisioningProfileName</em>: e.g.<strong>Cool Game Development Profile</strong><br>
+<em>keyChainName</em>: points to your keychain that can open development certificate, e.g.<strong>/Users/johnsmith/Library/Keychains/login.keychain</strong></p>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
         </div>
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://mrlaibin.github.io//post/hello-gridea">
-        <h2 class="post-title">Hello Gridea</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2018-12-12
-        </span>
-        <span>
-          2 min read
-        </span>
-        
-          <a href="https://mrlaibin.github.io//tag/3xOxCH47N" class="post-tag">
-            # Gridea
-          </a>
-        
-      </div>
-      
-        <a href="https://mrlaibin.github.io//post/hello-gridea" class="post-feature-image" style="background-image: url('https://mrlaibin.github.io//post-images/hello-gridea.png')">
-        </a>
-      
-      <div class="post-abstract">
-        <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
 
-      </div>
-    </article>
-  
-</div>
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://mrlaibin.github.io//post/linux-an-zhuang-ji-pei-zhi-mysql">
+              <h3 class="post-title">
+                linux 安装及配置 mysql
+              </h3>
+            </a>
+          </div>
+        
 
-        <div class="pagination-container">
-  
-  
-</div>
+        
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 

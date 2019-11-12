@@ -1,8 +1,8 @@
 <html>
   <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gridea | Gridea</title>
+<title>nginx日志分割 | Gridea</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://mrlaibin.github.io//favicon.ico?v=1573522990044">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -70,47 +70,83 @@
   </div>
 </div>
 
-        <div class="current-tag-container">
-            <h2 class="title">
-                标签：# Gridea
-            </h2> 
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              nginx日志分割
+            </h2>
+            <div class="post-info">
+              <span>
+                2019-11-12
+              </span>
+              <span>
+                1 min read
+              </span>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h2 id="直接在conf中使用">直接在conf中使用</h2>
+<pre><code>server {
+          listen 80 default_server;
+          if ($time_iso8601 ~ &quot;^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})&quot;) {
+                  set $year $1;
+                  set $month $2;
+                  set $day $3;
+          }
+          access_log /app/logs/api-access-$year-$month-$day.log main;
+          error_log /app/logs/api-error.log;
+          # Php files
+          location ~ \.php$ {
+                  try_files $uri =404;
+                  fastcgi_pass unix:/var/run/php-fpm7.sock;
+          }
+ }
+</code></pre>
+<h2 id="logrotate">logrotate</h2>
+<pre><code>/usr/local/nginx/logs/access.log  {
+	daily
+	rotate 7
+	missingok
+	dateext
+	compress
+	delaycompress
+	notifempty
+	sharedscripts
+	postrotate	[ -e /usr/local/nginx/logs/nginx.pid ] &amp;&amp; kill -USR1 `cat /usr/local/nginx/logs/nginx.pid`
+	endscript
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E7%9B%B4%E6%8E%A5%E5%9C%A8conf%E4%B8%AD%E4%BD%BF%E7%94%A8">直接在conf中使用</a></li>
+<li><a href="#logrotate">logrotate</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
         </div>
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://mrlaibin.github.io//post/hello-gridea">
-        <h2 class="post-title">Hello Gridea</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2018-12-12
-        </span>
-        <span>
-          2 min read
-        </span>
-        
-          <a href="https://mrlaibin.github.io//tag/3xOxCH47N" class="post-tag">
-            # Gridea
-          </a>
-        
-      </div>
-      
-        <a href="https://mrlaibin.github.io//post/hello-gridea" class="post-feature-image" style="background-image: url('https://mrlaibin.github.io//post-images/hello-gridea.png')">
-        </a>
-      
-      <div class="post-abstract">
-        <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
 
-      </div>
-    </article>
-  
-</div>
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://mrlaibin.github.io//post/opengl-ru-men-yi-chu-shi-hua-view">
+              <h3 class="post-title">
+                OpenGL 入门(一)初始化view
+              </h3>
+            </a>
+          </div>
+        
 
-        <div class="pagination-container">
-  
-  
-</div>
+        
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | 

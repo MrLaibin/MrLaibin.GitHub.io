@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>大量systemd-journal占用磁盘空间 | Gridea</title>
+<title>OpenGL 入门(一)初始化view | Gridea</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://mrlaibin.github.io//favicon.ico?v=1573522990044">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -73,26 +73,85 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              大量systemd-journal占用磁盘空间
+              OpenGL 入门(一)初始化view
             </h2>
             <div class="post-info">
               <span>
                 2019-11-12
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>首先通过journalctl查看日志过多的原因。<br>
-如果不重要可以通过 <code>journalctl --vacuum-size=500M</code>可以限制log的大小，</p>
+                <h1 id="init">init()</h1>
+<pre><code>void Init(){
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glMatrixMode(GL_PROJECTION);
+    gluPerspective(60.0f, 800.0f/600.0f, 0.1f, 1000.0f);
+}
+
+</code></pre>
+<h2 id="glmatrixmode">glMatrixMode</h2>
+<p>mode 指定哪一个矩阵堆栈是下一个矩阵操作的目标,可选值: GL_MODELVIEW、GL_PROJECTION、GL_TEXTURE.<br>
+glMatrixMode设置当前矩阵模式:<br>
+GL_MODELVIEW,对模型视景矩阵堆栈应用随后的矩阵操作.<br>
+GL_PROJECTION,对投影矩阵应用随后的矩阵操作.<br>
+GL_TEXTURE,对纹理矩阵堆栈应用随后的矩阵操作.</p>
+<h2 id="glloadidentity">glLoadIdentity</h2>
+<p>glLoadIdentity该函数的功能是重置当前指定的矩阵为单位矩阵.</p>
+<h2 id="gluperspective">gluPerspective</h2>
+<p>gluPerspective这个函数指定了观察的视景体（frustum为锥台的意思，通常译为视景体）在世界坐标系中的具体大小，一般而言，其中的参数aspect应该与窗口的宽高比大小相同。比如说，aspect=2.0表示在观察者的角度中物体的宽度是高度的两倍，在视口中宽度也是高度的两倍，这样显示出的物体才不会被扭曲。</p>
+<pre><code>gluPerspective(60.0f, 800.0f/600.0f, 0.1f, 1000.0f);
+
+void gluPerspective(
+GLdouble fovy, //角度
+GLdouble aspect,//视景体的宽高比,window 初始化比例
+GLdouble zNear,//沿z轴方向的两裁面之间的距离的近处
+GLdouble zFar //沿z轴方向的两裁面之间的距离的远处
+)
+</code></pre>
+<h1 id="draw">draw()</h1>
+<pre><code>void Draw(){
+    glClearColor(0.1f, 0.4f, 0.6f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+}
+</code></pre>
+<h3 id="glclearcolor">glClearColor</h3>
+<p>通过glClear使用红，绿，蓝以及AFA值来清除颜色缓冲区的，并且都被归一化在（0，1）之间的值，其实就是清空当前的所有颜色。</p>
+<h2 id="glclear">glClear</h2>
+<p>可以使用 | 运算符组合不同的缓冲标志位，表明需要清除的缓冲，例如glClear（GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT）表示要清除颜色缓冲以及深度缓冲，可以使用以下标志位<br>
+<code>GL_COLOR_BUFFER_BIT</code>: 当前可写的颜色缓冲<br>
+<code>GL_DEPTH_BUFFER_BIT</code>: 深度缓冲<br>
+<code>GL_ACCUM_BUFFER_BIT</code>: 累积缓冲<br>
+<code>GL_STENCIL_BUFFER_BIT</code>: 模板缓冲</p>
+<h1 id="简单地说glflush">简单地说glFlush</h1>
+<p>简单地说glFlush()就是强制刷新，OpenGL是使用一条<code>渲染管线</code>线性处理命令的，一般情况下，我们提交给OpenGL的指令并不是马上送到<code>驱动程序</code>里执行的，而是放到一个缓冲区里面，等这个缓冲区满了再一次过发到驱动程序里执行；很多时候只有几条指令是填充不满那个缓冲区的，就是说这些指令根本没有被发送到驱动里，所以我们要调用glFlush来强制把这些指令送到驱动里进行处理。</p>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li><a href="#init">init()</a>
+<ul>
+<li><a href="#glmatrixmode">glMatrixMode</a></li>
+<li><a href="#glloadidentity">glLoadIdentity</a></li>
+<li><a href="#gluperspective">gluPerspective</a></li>
+</ul>
+</li>
+<li><a href="#draw">draw()</a><br>
+*
+<ul>
+<li><a href="#glclearcolor">glClearColor</a></li>
+<li><a href="#glclear">glClear</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AE%80%E5%8D%95%E5%9C%B0%E8%AF%B4glflush">简单地说glFlush</a></li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -101,9 +160,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://mrlaibin.github.io//post/li-yong-docker-da-jian-maven-cang-ku">
+            <a href="https://mrlaibin.github.io//post/android-zu-jian-hua-shi-jian">
               <h3 class="post-title">
-                利用docker 搭建maven仓库
+                Android 组件化实践
               </h3>
             </a>
           </div>

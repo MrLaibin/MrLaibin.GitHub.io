@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>大量systemd-journal占用磁盘空间 | Gridea</title>
+<title>OpenGL (二)简单操作 | Gridea</title>
 <meta name="description" content="温故而知新" />
 <link rel="shortcut icon" href="https://mrlaibin.github.io//favicon.ico?v=1573522990044">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -73,26 +73,135 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              大量systemd-journal占用磁盘空间
+              OpenGL (二)简单操作
             </h2>
             <div class="post-info">
               <span>
                 2019-11-12
               </span>
               <span>
-                1 min read
+                3 min read
               </span>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>首先通过journalctl查看日志过多的原因。<br>
-如果不重要可以通过 <code>journalctl --vacuum-size=500M</code>可以限制log的大小，</p>
+                <h2 id="示例代码">示例代码</h2>
+<pre><code>void Draw(){
+    glPolygonMode(GL_FRONT, GL_LINE);
+    glClearColor(0.1f, 0.4f, 0.6f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor4ub(255, 255, 255, 255);
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex3f(0.0f,0.0f,-0.4f);
+    glVertex3f(0.2f, -0.2f, -0.4f);
+    glVertex3f(0.2f, 0.0f, -0.4f);
+    glVertex3f(0.2f, 0.2f, -0.4f);
+    glEnd();
+}
+</code></pre>
+<p>glBegin指定图元类型:<br>
+OpenGL 2.1是OpenGL Legecy，它支持的图元类型包括一下10种：</p>
+<pre><code>GL_POINTS       //点
+GL_LINES        //线段
+GL_LINE_STRIP   //多段线
+GL_LINE_LOOP    //线圈
+GL_TRIANGLES    //三角形
+GL_TRIANGLE_STRIP //三角形条带
+GL_TRIANGLE_FAN   //三角形扇
+GL_QUADS          //四边形
+GL_QUAD_STRIP     //四边形条带
+GL_POLYGON        //多边形(凸)
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="http://laibin.ml/usr/uploads/2019/07/2607347718.png" alt=""></figure>
+<h1 id="glvertex3f">glVertex3f</h1>
+<p>glVertex3f 函数用于指定每个点的坐标顶点,由x/y/z构成.</p>
+<p>开始画图</p>
+<pre><code>glColor4ub(255,255,255,255);
+glBegin(GL_TRiangles);
+</code></pre>
+<p>画三角形逆时针</p>
+<pre><code>glvertex3f(-0.2f,-0.2f,-0.4f);
+glVertex3f(0.2f,-0.2f,-0.4f);左下角
+glVertex3f(0.0f,0.2f,-0.4f);
+glend
+</code></pre>
+<h2 id="多边形gl_polygon">多边形GL_POLYGON</h2>
+<pre><code>void Draw(){
+    glClearColor(0.1f, 0.4f, 0.6f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor4ub(255, 255, 255, 255);
+    glBegin(GL_POLYGON);
+    glVertex3f(-0.2f,-0.2f,-0.4f);
+    glVertex3f(0.2f, -0.2f, -0.4f);
+    glVertex3f(0.2f, 0.0f, -0.4f);
+    glVertex3f(-0.2f, 0.0f, -0.4f);
+    glEnd();
+}
+</code></pre>
+<h2 id="缩放">缩放</h2>
+<pre><code>void Draw(){
+    glClearColor(0.1f, 0.4f, 0.6f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor4ub(255, 255, 255, 255);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+	//
+    glScalef(0.1f,0.1f,0.1f);//对原来的xyz的
+	//
+    glBegin(GL_POLYGON);
+    glVertex3f(-0.2f,-0.2f,-0.4f);
+    glVertex3f(0.2f, -0.2f, -0.4f);
+    glVertex3f(0.2f, 0.0f, -0.4f);
+    glVertex3f(-0.2f, 0.0f, -0.4f);
+    glEnd();
+}
+</code></pre>
+<h2 id="旋转动画">旋转动画</h2>
+<pre><code>void Draw(){
+    glClearColor(0.1f, 0.4f, 0.6f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor4ub(255, 255, 255, 255);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    static float angle = 0.0f;
+    float deltatime=0.016f;
+    angle-=deltatime*30.0f;
+    glRotated(angle, 0.0f, 0.0f, 1.0f);
+    glBegin(GL_POLYGON);
+    glVertex3f(-0.2f,-0.2f,-0.4f);
+    glVertex3f(0.2f, -0.2f, -0.4f);
+    glVertex3f(0.2f, 0.0f, -0.4f);
+    glVertex3f(-0.2f, 0.0f, -0.4f);
+    glEnd();
+}
+
+</code></pre>
+<h2 id="缩放动画">缩放动画</h2>
+<pre><code>  static float distance = 10.f;
+    distance-=0.016f*1.0f;
+    gluLookAt(0.0f, 0.0f, distance, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+</code></pre>
 
               </div>
               <div class="toc-container">
-                
+                <ul class="markdownIt-TOC">
+<li>
+<ul>
+<li><a href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81">示例代码</a></li>
+</ul>
+</li>
+<li><a href="#glvertex3f">glVertex3f</a>
+<ul>
+<li><a href="#%E5%A4%9A%E8%BE%B9%E5%BD%A2gl_polygon">多边形GL_POLYGON</a></li>
+<li><a href="#%E7%BC%A9%E6%94%BE">缩放</a></li>
+<li><a href="#%E6%97%8B%E8%BD%AC%E5%8A%A8%E7%94%BB">旋转动画</a></li>
+<li><a href="#%E7%BC%A9%E6%94%BE%E5%8A%A8%E7%94%BB">缩放动画</a></li>
+</ul>
+</li>
+</ul>
+
               </div>
             </div>
           </article>
@@ -101,9 +210,9 @@
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://mrlaibin.github.io//post/li-yong-docker-da-jian-maven-cang-ku">
+            <a href="https://mrlaibin.github.io//post/react-hooks-yi">
               <h3 class="post-title">
-                利用docker 搭建maven仓库
+                React Hooks （一）
               </h3>
             </a>
           </div>
