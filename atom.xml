@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://mrlaibin.github.io/</id>
     <title>Gridea</title>
-    <updated>2019-11-12T01:51:36.833Z</updated>
+    <updated>2019-11-28T08:15:46.942Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://mrlaibin.github.io/"/>
     <link rel="self" href="https://mrlaibin.github.io//atom.xml"/>
@@ -10,6 +10,16 @@
     <logo>https://mrlaibin.github.io//images/avatar.png</logo>
     <icon>https://mrlaibin.github.io//favicon.ico</icon>
     <rights>All rights reserved 2019, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[FFmpeg处理]]></title>
+        <id>https://mrlaibin.github.io//post/ffmpeg-chu-li</id>
+        <link href="https://mrlaibin.github.io//post/ffmpeg-chu-li">
+        </link>
+        <updated>2019-11-14T07:47:40.000Z</updated>
+        <content type="html"><![CDATA[<p>音视频的处理流程<br>
+<img src="https://mrlaibin.github.io//post-images/1573717726390.png" alt=""></p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[OpenGL入门(三)加载文件/显示纹理]]></title>
         <id>https://mrlaibin.github.io//post/opengl-ru-men-san-jia-zai-wen-jian-xian-shi-wen-li</id>
@@ -481,66 +491,6 @@ To build a Xcode project (<em>.xcodeproj</em>), use this:</p>
 <em>NameOfCertificateIdentity</em>: e.g.<strong>iPhone Developer: My Name (738d039880d)</strong><br>
 <em>ProvisioningProfileName</em>: e.g.<strong>Cool Game Development Profile</strong><br>
 <em>keyChainName</em>: points to your keychain that can open development certificate, e.g.<strong>/Users/johnsmith/Library/Keychains/login.keychain</strong></p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[linux 安装及配置 mysql]]></title>
-        <id>https://mrlaibin.github.io//post/linux-an-zhuang-ji-pei-zhi-mysql</id>
-        <link href="https://mrlaibin.github.io//post/linux-an-zhuang-ji-pei-zhi-mysql">
-        </link>
-        <updated>2019-11-12T01:40:57.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="一-检查系统是否安装其他版本的-mysql-数据">一、检查系统是否安装其他版本的 MYSQL 数据</h1>
-<p>首先查看机器上是否安装的有 Mysql：<br>
-rpm -qa | grep -i mysql</p>
-<p>#yum list installed | grep mysql</p>
-<p>#删除所有 mysql （或者用： yum -y remove mysql-libs.x86_64 删除）<br>
-yum -y remove mysql*</p>
-<h1 id="二-安装及配置-目录依次执行">二、安装及配置（# 目录依次执行 ）</h1>
-<p>#下载安装包 （这里是 5.6 版本的）<br>
-wget <a href="https://hacpai.com/forward?goto=http%3A%2F%2Frepo.mysql.com%2Fmysql-community-release-el6-5.noarch.rpm">http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm</a></p>
-<p>rpm -ivh mysql-community-release-el6-5.noarch.rpm</p>
-<p>yum repolist all | grep mysql</p>
-<p>安装 MYSQL 数据库<br>
-yum install mysql-community-server -y</p>
-<p>设置为开机启动–编号 2、3、4 都是 on 代表开机自动启动）<br>
-chkconfig mysqld on</p>
-<p>chkconfig –list | grep mysqld</p>
-<h1 id="三-设置远程-root">三、设置远程 root</h1>
-<p>启动 mysql<br>
-service mysqld start</p>
-<p>设置 root 密码<br>
-mysql_secure_installation</p>
-<p>重启 mysql<br>
-service mysqld restart</p>
-<p>登录<br>
-mysql -u root -p “yourpassword”</p>
-<p>use mysql</p>
-<p>进行授权操作：<br>
-mysql&gt; GRANT ALL PRIVILEGES ON <em>.</em> TO ‘root’@‘%’ IDENTIFIED BY ‘yourpassword’ WITH GRANT OPTION;</p>
-<p>#重载授权表设置立即生效：<br>
-FLUSH PRIVILEGES;</p>
-<p>#查看配置是否成功<br>
-mysql&gt; select host,user from user;</p>
-<figure data-type="image" tabindex="1"><img src="https://img.hacpai.com/pipe/pipe/francis/francis/a39de56fb3fc4e0c83f3d195a49feb50.png?imageView2/2/w/768/interlace/1/format/webp" alt="imagepng"></figure>
-<p>有 % root 就可以远程登陆了</p>
-<h1 id="四-配置-mysql-路径到环境变量">四、配置 mysql 路径到环境变量</h1>
-<p>vim /etc/profile<br>
-MYSQL_HOME=/usr/mysql (mysql 安装地址)<br>
-PATH=PATH:PATH:PATH:MYSQL_HOME/bin<br>
-export PATH MYSQL_HOME</p>
-<p>#使环境变量生效<br>
-source /etc/profile</p>
-<h1 id="五-开放-mysql-端口-3306">五、开放 mysql 端口 3306</h1>
-<p>#修改防火墙<br>
-vim /etc/sysconfig/iptables</p>
-<p>#开放端口 3306<br>
--A INPUT -m state –state NEW -m tcp -p tcp –dport 3306 -j ACCEPT</p>
-<p>#重启防火墙<br>
-service iptables restart</p>
-<p>作者：francis<br>
-链接：https://hacpai.com/article/1525925602552<br>
-来源：黑客派<br>
-协议：CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/</p>
 ]]></content>
     </entry>
 </feed>
